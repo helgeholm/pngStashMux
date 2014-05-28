@@ -12,19 +12,21 @@ module.exports = function pngStashMux(files, cb) {
     for (fileIdx = index.files.length - 1;
          index.files[fileIdx].pos > idx;
          fileIdx--);
-    if (!currentOpenPng || currentOpenPng.idx != fileIdx) {
-      save(function(err) {
-        if (err) return cb(err);
-        pngStash(index.files[fileIdx].file, function(err, stash) {
-          currentOpenPng = {
-            idx: fileIdx,
-            synced: true,
-            stash: stash
-          }
-          cb();
-        });
+
+    if (currentOpenPng && currentOpenPng.idx == fileIdx)
+      return cb();
+
+    save(function(err) {
+      if (err) return cb(err);
+      pngStash(index.files[fileIdx].file, function(err, stash) {
+        currentOpenPng = {
+          idx: fileIdx,
+          synced: true,
+          stash: stash
+        }
+        cb();
       });
-    }
+    });
   }
 
   function save(cb) {
@@ -41,8 +43,20 @@ module.exports = function pngStashMux(files, cb) {
     });
   }
 
+  function set(idx, val, cb) {
+    openFileFor(idx, function(err) {
+      if (err) return cb(err);
+      var fileOffset = index.files[currentOpenPng.idx].pos;
+      currentOpenPng.stash.setByte(idx - fileOffset, val);
+      currentOpenPng.synced = false;
+      cb(null, val);
+    });
+  }
+
   functions = {
-    getByte: get
+    getByte: get,
+    setByte: set,
+    save: save
   }
 
   scanFiles(files, function(err, _index) {
