@@ -1,0 +1,27 @@
+{
+  "name": "png-stash-mux",
+  "version": "0.0.0",
+  "description": "Hide data in the least significant bits of PNGs.  Takes an arbitrary set of PNGs and presents a mutable single sequence of bytes.",
+  "main": "pngStashMux.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deestan/pngStashMux"
+  },
+  "keywords": [
+    "steganography",
+    "multiplexer",
+    "png"
+  ],
+  "author": "Helge Skogly Holm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deestan/pngStashMux/issues"
+  },
+  "dependencies": {
+    "png-stash": "~1.0.0",
+    "async": "~0.9.0"
+  }
+}
