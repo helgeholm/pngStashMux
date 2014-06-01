@@ -1,6 +1,6 @@
 {
   "name": "png-stash-mux",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Hide data in the least significant bits of PNGs.  Takes an arbitrary set of PNGs and presents a mutable single sequence of bytes.",
   "main": "pngStashMux.js",
   "scripts": {
